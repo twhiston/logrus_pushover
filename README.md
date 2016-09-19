@@ -1,4 +1,4 @@
-# Pushover hook for logrus [![GoDoc](http://godoc.org/github.com/toorop/logrus_pushover?status.svg)](http://godoc.orggithub.com/toorop/logrus_pushover) [![Go Report Card](https://goreportcard.com/badge/github.com/toorop/logrus_pushover)](https://goreportcard.com/report/github.com/toorop/logrus_pushover)
+# Pushover hook for logrus [![GoDoc](http://godoc.org/github.com/toorop/logrus_pushover?status.svg)](http://godoc.org/github.com/toorop/logrus_pushover) [![Go Report Card](https://goreportcard.com/badge/github.com/toorop/logrus_pushover)](https://goreportcard.com/report/github.com/toorop/logrus_pushover)
 
 Send Logrus log message using [Pushover](https://pushover.net/) on levels:
 
