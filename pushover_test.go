@@ -41,3 +41,18 @@ func TestAsync(t *testing.T) {
 	log.Hooks.Add(hook)
 	log.WithFields(logrus.Fields{"withField": "1", "filterMe": "1"}).Error(msg)
 }
+
+func TestSetDuration(t *testing.T) {
+	hook, err := NewPushoverHook(getTokensFromEnv())
+	if err != nil {
+		t.Error("expected err == nil, got", err)
+	}
+	err = hook.SetMuteDelay("blabla")
+	if err == nil {
+		t.Error("expected err != nil, got", err)
+	}
+	err = hook.SetMuteDelay("15m")
+	if err != nil {
+		t.Error("expected err == nil, got", err)
+	}
+}
