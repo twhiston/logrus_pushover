@@ -52,6 +52,7 @@ func (hook *PushoverHook) Fire(entry *logrus.Entry) error {
 	if time.Since(hook.lastMsgSentAt) < hook.muteDelay {
 		return nil
 	}
+	hook.lastMsgSentAt = time.Now()
 	if hook.async {
 		go hook.pushOverClient.Message(entry.Message)
 		return nil
