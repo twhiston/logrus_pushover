@@ -3,8 +3,8 @@ package logrusPushover
 import (
 	"time"
 
-	"github.com/Sirupsen/logrus"
-	"github.com/thorduri/pushover"
+	"github.com/sirupsen/logrus"
+	"github.com/toorop/pushover"
 )
 
 // PushoverHook sends log via Pushover (https://pushover.net/)
