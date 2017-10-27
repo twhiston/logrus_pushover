@@ -2,6 +2,7 @@ package logrusPushover
 
 import (
 	"time"
+	"errors"
 
 	"github.com/sirupsen/logrus"
 	"github.com/toorop/pushover"
@@ -15,6 +16,7 @@ type PushoverHook struct {
 	muteDelay      time.Duration
 	lastMsgSentAt  time.Time
 	pushOverClient *pushover.Pushover
+	levels 		   []logrus.Level
 }
 
 // NewPushoverHook init & returns a new PushoverHook
@@ -33,6 +35,11 @@ func newPushoverHook(pushoverUserToken, pushoverAPIToken string, async bool) (*P
 	p := PushoverHook{
 		async:     async,
 		muteDelay: 15 * time.Minute,
+		levels: []logrus.Level{
+			logrus.PanicLevel,
+			logrus.FatalLevel,
+			logrus.ErrorLevel,
+			},
 	}
 	p.pushOverClient, err = pushover.NewPushover(pushoverAPIToken, pushoverUserToken)
 	return &p, err
@@ -40,11 +47,21 @@ func newPushoverHook(pushoverUserToken, pushoverAPIToken string, async bool) (*P
 
 // Levels returns the available logging levels.
 func (hook *PushoverHook) Levels() []logrus.Level {
-	return []logrus.Level{
-		logrus.PanicLevel,
-		logrus.FatalLevel,
-		logrus.ErrorLevel,
+	return hook.levels
+}
+
+func (hook *PushoverHook) SetLevels(levels []logrus.Level){
+	hook.levels = levels
+}
+
+func (hook *PushoverHook) AddLevels(level logrus.Level) error {
+	for _, l := range hook.levels {
+		if l == level {
+			return errors.New("Level already exists")
+		}
 	}
+	hook.levels = append(hook.levels,level)
+	return nil
 }
 
 // Fire is called when a log event is fired.
